@@ -53,7 +53,7 @@ function Skins() {
               className="flex py-1 px-3 overflow-x-auto hover:bg-neutral-900"
             >
               <div className="w-48">{theme.name}</div>
-              <div className="text-neutral-400 w-96">{theme.url}</div>
+              <div className="text-neutral-400 w-[600px]">{theme.url}</div>
               <div className="text-neutral-600 w-48">standard</div>
             </Link>
           );
