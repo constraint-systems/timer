@@ -39,45 +39,47 @@ function Gallery() {
           gridTemplateColumns: "repeat(2, 1fr)",
         }}
       >
-        {themeIds.slice(galleryCursor, galleryPerPage).map((id) => {
-          const theme = themeMap[id];
-          return (
-            <div className="flex flex-col" key={theme.url}>
-              <Link
-                to={`/skin/${encodeURIComponent(theme.url)}`}
-                className="bg-neutral-900 px-3 py-2 group flex hover:bg-neutral-800 cursor-pointer"
-              >
-                <div className="flex gap-2">
-                  <div className="text-neutral-200 group-hover:text-white">
-                    {theme.name}
+        {themeIds
+          .slice(galleryCursor, galleryCursor + galleryPerPage)
+          .map((id) => {
+            const theme = themeMap[id];
+            return (
+              <div className="flex flex-col" key={theme.url}>
+                <Link
+                  to={`/skin/${encodeURIComponent(theme.url)}`}
+                  className="bg-neutral-900 px-3 py-2 group flex hover:bg-neutral-800 cursor-pointer"
+                >
+                  <div className="flex gap-2">
+                    <div className="text-neutral-200 group-hover:text-white">
+                      {theme.name}
+                    </div>
+                    <div className="text-neutral-400 max-w-[30ch] group-hover:test-neutral-200 whitespace-nowrap">
+                      @{theme.url.slice(-30)}
+                    </div>
                   </div>
-                  <div className="text-neutral-400 max-w-[30ch] group-hover:test-neutral-200 whitespace-nowrap">
-                    @{theme.url.slice(-30)}
+                  <div className="text-neutral-400 justify-end flex gap-2 items-center grow text-right">
+                    <div>
+                      <ArrowRightIcon size={13} />
+                    </div>
                   </div>
+                </Link>
+                <div className="grow relative">
+                  <iframe
+                    onLoad={(e) => {
+                      setIframes((prev) => {
+                        return {
+                          ...prev,
+                          [theme.url]: e.target as HTMLIFrameElement,
+                        };
+                      });
+                    }}
+                    className={`w-full h-full ${iframes[theme.url] ? "block" : "hidden"}`}
+                    src={theme.url}
+                  />
                 </div>
-                <div className="text-neutral-400 justify-end flex gap-2 items-center grow text-right">
-                  <div>
-                    <ArrowRightIcon size={13} />
-                  </div>
-                </div>
-              </Link>
-              <div className="grow relative">
-                <iframe
-                  onLoad={(e) => {
-                    setIframes((prev) => {
-                      return {
-                        ...prev,
-                        [theme.url]: e.target as HTMLIFrameElement,
-                      };
-                    });
-                  }}
-                  className={`w-full h-full ${iframes[theme.url] ? "block" : "hidden"}`}
-                  src={theme.url}
-                />
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
         <HandleTaskEnd />
       </div>
       {addedTask ? null : <Banner />}
