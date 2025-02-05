@@ -7,12 +7,12 @@ export const secondsInDay = secondsInHour * 24;
 export const defaultSkinUrl = "https://timer-skins.constraint.systems";
 export const standardThemes: ThemeType[] = [
   {
-    name: "dev",
+    name: "Freehand",
     url: defaultSkinUrl + "/#freehand",
   },
   {
-    name: "dev",
-    url: "http://localhost:5173/#dev",
+    name: "Evangelion",
+    url: defaultSkinUrl + "/#evangelion",
   },
   {
     name: "API",
