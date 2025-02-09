@@ -4,7 +4,11 @@ export const secondsInHour = 3600;
 export const secondsInQuarterHour = secondsInHour / 4;
 export const secondsInDay = secondsInHour * 24;
 
-export const defaultSkinUrl = "https://timer-skins.constraint.systems";
+const isDev = true;
+
+export const defaultSkinUrl = isDev
+  ? "http://localhost:4112"
+  : "https://timer-skins.constraint.systems";
 export const standardThemes: ThemeType[] = [
   {
     name: "Freehand",

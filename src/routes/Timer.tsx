@@ -7,12 +7,7 @@ import {
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import {
-  ExpandIcon,
-  ShuffleIcon,
-  ListIcon,
-  Grid2x2Icon,
-} from "lucide-react";
+import { ExpandIcon, ShuffleIcon, ListIcon, Grid2x2Icon } from "lucide-react";
 import Banner from "../components/Banner";
 import { useGetIframeData } from "../shared/utils";
 
@@ -30,7 +25,10 @@ function Timer() {
     otherThemeIds[Math.floor(Math.random() * otherThemeIds.length)];
 
   const url = decodeURIComponent(params.encodedURL!);
-  const meta = themeMap[url];
+  const meta = themeMap[url] || {
+    name: "Unknown",
+    url: url,
+  };
 
   useEffect(() => {
     if (iframe) {
