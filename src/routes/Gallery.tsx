@@ -95,30 +95,29 @@ export function GalleryFooter() {
 
   return (
     <div className="flex items-center px-3 py-2 justify-between bg-black text-neutral-400">
+      {galleryCursor > 0 && (
+        <button
+          onClick={() => {
+            setGalleryCursor((prev) => prev - galleryPerPage);
+          }}
+        >
+          Previous
+        </button>
+      )}
+
       <div>
         Page {galleryCursor / galleryPerPage + 1} of{" "}
         {Math.ceil(themeIds.length / galleryPerPage)}
       </div>
-      <div className="flex gap-2">
-        {galleryCursor > 0 && (
-          <button
-            onClick={() => {
-              setGalleryCursor((prev) => prev - galleryPerPage);
-            }}
-          >
-            Previous
-          </button>
-        )}
-        {galleryCursor + galleryPerPage < themeIds.length && (
-          <button
-            onClick={() => {
-              setGalleryCursor((prev) => prev + galleryPerPage);
-            }}
-          >
-            Next
-          </button>
-        )}
-      </div>
+      {galleryCursor + galleryPerPage < themeIds.length && (
+        <button
+          onClick={() => {
+            setGalleryCursor((prev) => prev + galleryPerPage);
+          }}
+        >
+          Next
+        </button>
+      )}
     </div>
   );
 }

@@ -9,9 +9,6 @@ function HandleExportEnd() {
   const isEnded =
     addedTask && currentSeconds >= addedTask.startTime + addedTask.duration;
 
-  console.log(addedTask);
-  console.log(isEnded);
-
   return isEnded ? (
     <div className="absolute inset-0 bg-transparent pointer-events-none flex justify-center items-center">
       <div className="bg-black pointer-events-auto border border-neutral-800 text-neutral-100 px-4 py-4 w-[500px] relative">

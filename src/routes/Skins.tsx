@@ -1,11 +1,18 @@
 import { useAtom } from "jotai";
-import { themeIdsAtom, themeMapAtom } from "../atoms";
+import { devSkinEnabledAtom, devSkinPortAtom, themeIdsAtom, themeMapAtom } from "../atoms";
 import Header from "../components/Header";
 import { Link } from "react-router";
+import { v4 as uuid } from "uuid";
+import { useState } from "react";
 
 function Skins() {
-  const [themeIds] = useAtom(themeIdsAtom);
-  const [themeMap] = useAtom(themeMapAtom);
+  const [themeIds, setThemeIds] = useAtom(themeIdsAtom);
+  const [themeMap, setThemeMap] = useAtom(themeMapAtom);
+  const [devSkinPort, setDevSkinPort] = useAtom(devSkinPortAtom);
+  const [devSkinEnabled, setDevSkinEnabled] = useAtom(devSkinEnabledAtom);
+  const [name, setName] = useState("");
+  const [url, setUrl] = useState("");
+
 
   return (
     <div className="w-full">
@@ -30,13 +37,74 @@ function Skins() {
               <input
                 className="w-48 px-3 py-2 -ml-3 focus:outline-none"
                 placeholder="Name"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
               />
               <input
                 className="w-96 px-3 py-2 focus:outline-none"
                 placeholder="URL"
+                value={url}
+                onChange={(e) => {
+                  setUrl(e.target.value);
+                }}
+              />
+              <button
+                className="rounded-full px-5 bg-neutral-900 hover:bg-neutral-800 text-neutral-400 py-2"
+                onClick={() => {
+                  const id = uuid();
+                  setThemeMap((prev) => {
+                    return {
+                      ...prev,
+                      [id]: {
+                        id,
+                        name,
+                        url,
+                      },
+                    };
+                  });
+                  setThemeIds((prev) => {
+                    return [id, ...prev];
+                  });
+                  setName("");
+                  setUrl("");
+                }}
+              >
+                add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="font-bold">Local dev</div>
+          <div className="text-sm text-neutral-400">
+            Checking this adds a timer entry for localhost. You can use this for
+            convenient live local dev of your own timer.
+          </div>
+          <div className="flex-col">
+            <div className="flex gap-2 items-center">
+              <label className="flex gap-2 w-48 select-none">
+                <input
+                  type="checkbox"
+                  checked={devSkinEnabled}
+                  onChange={() => {
+                    setDevSkinEnabled(!devSkinEnabled);
+                  }}
+                />
+                <div>Enable</div>
+              </label>
+              <div>http://localhost</div>
+              <input
+                className="w-96 px-3 py-2 focus:outline-none"
+                placeholder="Port (and path if you want)"
+                value={devSkinPort}
+                onChange={(e) => {
+                  setDevSkinPort(e.target.value);
+                }}
               />
               <button className="rounded-full px-5 bg-neutral-900 hover:bg-neutral-800 text-neutral-400 py-2">
-                add
+                save
               </button>
             </div>
           </div>

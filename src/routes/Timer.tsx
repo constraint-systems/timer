@@ -3,6 +3,7 @@ import {
   themeIdsAtom,
   themeMapAtom,
   addedTaskAtom,
+  devSkinPortAtom,
 } from "../atoms";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
@@ -18,6 +19,7 @@ function Timer() {
   const [themeMap] = useAtom(themeMapAtom);
   const [themeIds] = useAtom(themeIdsAtom);
   const [addedTask] = useAtom(addedTaskAtom);
+  const [devSkinPort] = useAtom(devSkinPortAtom);
   const iframeData = useGetIframeData();
 
   const otherThemeIds = themeIds.filter((id) => id !== params.encodedURL);
@@ -29,6 +31,10 @@ function Timer() {
     name: "Unknown",
     url: url,
   };
+  // devskin special case
+  if (url === "http://localhost" + devSkinPort) {
+    meta.name = "localhost";
+  }
 
   useEffect(() => {
     if (iframe) {
